@@ -22,7 +22,7 @@ class Game:
         self.player = Player(player_position.x, player_position.y)
 
         # dessiner le groupe de calques
-        self.group = pyscroll.PyscrollGroup(map_layer=map_layer, default_layer=3)
+        self.group = pyscroll.PyscrollGroup(map_layer=map_layer, default_layer=5)
         self.group.add(self.player)
 
         # definir une liste qui stocke les rectangles de collison
