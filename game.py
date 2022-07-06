@@ -25,8 +25,14 @@ class Game:
         self.group = pyscroll.PyscrollGroup(map_layer=map_layer, default_layer=3)
         self.group.add(self.player)
 
+        # definir une liste qui stocke les rectangles de collison
+        self.walls = []
+        for obj in tmx_data.objects:
+            if obj.properties['Type'] == "collision":
+                self.walls.append(pygame.Rect(obj.x, obj.y, obj.width, obj.height))
+
     def handle_input(self):
-        pressed = pygame.key.get_pressed() #recupère les touches pressé
+        pressed = pygame.key.get_pressed()  # recupère les touches pressé
 
         if pressed[pygame.K_UP]:
             self.player.move_up()
@@ -41,6 +47,14 @@ class Game:
             self.player.move_right()
             self.player.change_animation('right')
 
+    def update(self):
+        self.group.update()
+
+        # verification de la collison
+        for sprite in self.group.sprites():
+            if sprite.feet.collidelist(self.walls) > -1:
+                sprite.move_back()
+
     def run(self):
 
         clock = pygame.time.Clock()
@@ -49,8 +63,10 @@ class Game:
         running = True
 
         while running:
+
+            self.player.save_location()
             self.handle_input()
-            self.group.update()
+            self.update()
             self.group.center(self.player.rect.center)
             self.group.draw(self.screen)
             pygame.display.flip()  # Permet de actualiser à chaque tour de boucle
