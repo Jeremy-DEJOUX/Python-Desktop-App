@@ -1,11 +1,13 @@
 import pygame
+import os
 
 
 class Player(pygame.sprite.Sprite):
 
     def __init__(self, x, y):
+        cwd = os.getcwd()
         super().__init__()
-        self.sprite_sheet = pygame.image.load('player.png')
+        self.sprite_sheet = pygame.image.load(cwd+'/sprites/player.png')
         self.image = self.get_image(0, 0)
         self.image.set_colorkey(0, 0)
         self.rect = self.image.get_rect()
