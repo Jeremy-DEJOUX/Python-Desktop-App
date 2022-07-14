@@ -12,7 +12,7 @@ class Game:
         pygame.display.set_caption("Labyrinthe")  # definit le titre de la fenetre
 
         # generer un jouer
-        self.player = Player(0, 0)
+        self.player = Player("player", 0, 0)
         self.map_manager = MapManager(self.screen, self.player)
 
 
