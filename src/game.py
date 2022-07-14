@@ -1,6 +1,6 @@
 import pygame
 from player import Player
-from src.map import MapManager
+from map import MapManager
 
 
 class Game:

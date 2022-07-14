@@ -28,11 +28,25 @@ class MapManager:
         self.register_map("world", portals=[
             Portal(from_world="world", origin_point="enter_house", target_world="house", teleport_point="spawn_house")
         ])
-        self.register_map("house")
+        self.register_map("house", portals=[
+            Portal(from_world="house", origin_point="exit_house", target_world="world", teleport_point="enter_house_exit")
+        ])
 
         self.teleport_player("player")
 
     def check_collisions(self):
+        #portals
+        for portal in self.get_map().portals:
+            if portal.from_world == self.current_map:
+                point = self.get_object(portal.origin_point)
+                rect = pygame.Rect(point.x, point.y, point.width, point.height)
+
+                if self.player.feet.colliderect(rect):
+                    copy_portal = portal
+                    self.current_map = portal.target_world
+                    self.teleport_player(copy_portal.teleport_point)
+
+
         for sprite in self.get_group().sprites():
             if sprite.feet.collidelist(self.get_walls()) > -1:
                 sprite.move_back()
