@@ -2,7 +2,7 @@ import pygame
 import os
 import platform
 
-from src.animation import AnimateSprite
+from animation import AnimateSprite
 
 
 class Player(AnimateSprite):
